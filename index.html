@@ -1,0 +1,316 @@
+<title>Luna École</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap">
+<style>
+:root{
+  --ground:#f5f3f9; --surface:#ffffff; --surface-2:#ece8f4; --line:#ddd7ea;
+  --ink:#2a2440; --muted:#6f6889; --accent:#7b3fa0; --accent-ink:#ffffff; --accent-soft:#efe4f7;
+  --today:#fff6d6; --today-line:#e5c25a;
+  --c-rituel:#fde9d9; --c-fr:#dbe9fb; --c-maths:#fbdada; --c-apq:#e4f3e1; --c-recre:#f0eef3;
+  --c-anglais:#fff2b8; --c-arts:#f8dcf1; --c-pause:#f0eef3; --c-devoirs:#ece6f5; --c-eps:#fff0c2;
+  --c-monde:#dff3e6; --c-bilan:#f0eef3; --cell-ink:#2a2440;
+  --shadow:0 1px 2px rgba(42,36,64,.06),0 8px 24px -12px rgba(42,36,64,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#16131f; --surface:#211c2e; --surface-2:#2b2540; --line:#3a3350;
+    --ink:#efeaf7; --muted:#a79fbf; --accent:#c48ae6; --accent-ink:#1a1224; --accent-soft:#33264a;
+    --today:#3a3220; --today-line:#c9a84c;
+    --c-rituel:#4a3628; --c-fr:#26354d; --c-maths:#4a2a2e; --c-apq:#2a3d2b; --c-recre:#2b2540;
+    --c-anglais:#4a4222; --c-arts:#45283f; --c-pause:#2b2540; --c-devoirs:#332a45; --c-eps:#4a4222;
+    --c-monde:#24402f; --c-bilan:#2b2540; --cell-ink:#efeaf7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#16131f; --surface:#211c2e; --surface-2:#2b2540; --line:#3a3350;
+  --ink:#efeaf7; --muted:#a79fbf; --accent:#c48ae6; --accent-ink:#1a1224; --accent-soft:#33264a;
+  --today:#3a3220; --today-line:#c9a84c;
+  --c-rituel:#4a3628; --c-fr:#26354d; --c-maths:#4a2a2e; --c-apq:#2a3d2b; --c-recre:#2b2540;
+  --c-anglais:#4a4222; --c-arts:#45283f; --c-pause:#2b2540; --c-devoirs:#332a45; --c-eps:#4a4222;
+  --c-monde:#24402f; --c-bilan:#2b2540; --cell-ink:#efeaf7;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.5 "Nunito",system-ui,sans-serif}
+a{color:var(--accent)}
+h1,h2,h3{font-family:"Fredoka","Nunito",system-ui,sans-serif;font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .in{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.avatar{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:"Fredoka",sans-serif;font-weight:600;font-size:22px;flex:none}
+.brand h1{font-size:1.5rem}
+.brand small{display:block;color:var(--muted);font-size:.85rem;font-weight:600}
+.quick{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:focus-visible,.tab:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* sections */
+section{margin-top:32px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.sec-head h2{font-size:1.35rem}
+.sec-head .hint{color:var(--muted);font-size:.9rem}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:700;color:var(--muted)}
+
+/* today */
+.today{margin-top:20px;background:var(--today);border:1px solid var(--today-line);border-radius:18px;padding:16px 18px;display:grid;gap:10px}
+.today .row{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.today h2{font-size:1.25rem}
+.today .items{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.85rem;font-weight:600}
+.chip b{font-weight:800}
+
+/* info grid */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.card h3{font-size:1.1rem;margin-bottom:10px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.kv dt{color:var(--muted);font-weight:600;margin:0}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.contact{display:grid;gap:10px}
+.contact .p{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2);flex-wrap:wrap}
+.contact .p .who{font-weight:700}
+.contact .p .role{display:block;color:var(--muted);font-size:.82rem;font-weight:600}
+.contact .p .links{display:flex;gap:6px;flex-wrap:wrap}
+.contact .p .links a{font-size:.85rem;overflow-wrap:anywhere}
+ul.plain{margin:0;padding-left:18px}
+ul.plain li{margin:4px 0}
+
+/* timetable — desktop grid */
+.tt{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:var(--shadow);overflow-x:auto}
+.tt-grid{display:grid;grid-template-columns:58px repeat(4,minmax(150px,1fr));grid-auto-rows:minmax(30px,auto);gap:3px;min-width:700px}
+.tt-grid .dh{position:sticky;top:0;grid-row:1;text-align:center;font-family:"Fredoka",sans-serif;font-weight:600;padding:6px;border-radius:10px;background:var(--surface-2)}
+.tt-grid .dh.is-today{background:var(--accent);color:var(--accent-ink)}
+.tt-grid .time{grid-column:1;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px;text-align:right;padding-right:6px;font-weight:700}
+.cell{border-radius:8px;padding:5px 8px;font-size:.78rem;line-height:1.25;color:var(--cell-ink);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.cell .d{font-size:.68rem;opacity:.7;font-variant-numeric:tabular-nums}
+.cat-rituel{background:var(--c-rituel)}.cat-fr{background:var(--c-fr)}.cat-maths{background:var(--c-maths)}
+.cat-apq{background:var(--c-apq)}.cat-recre{background:var(--c-recre)}.cat-anglais{background:var(--c-anglais)}
+.cat-arts{background:var(--c-arts)}.cat-pause{background:var(--c-pause)}.cat-devoirs{background:var(--c-devoirs)}
+.cat-eps{background:var(--c-eps)}.cat-monde{background:var(--c-monde)}.cat-bilan{background:var(--c-bilan)}
+.cat-recre,.cat-pause,.cat-bilan{color:var(--muted);font-style:italic}
+
+/* timetable — mobile list */
+.tt-mobile{display:none}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{flex:1;padding:9px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:700 .9rem "Nunito",sans-serif;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab .dot{display:block;font-size:.65rem;font-weight:800;letter-spacing:.05em;opacity:.8}
+.list{display:grid;gap:4px}
+.list .it{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;font-size:.92rem;color:var(--cell-ink)}
+.list .it .t{font-size:.78rem;font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;line-height:1.2}
+.list .it .d{font-size:.75rem;opacity:.7}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* notes */
+textarea{width:100%;min-height:140px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;resize:vertical}
+.saved{font-size:.82rem;color:var(--muted);margin-top:6px}
+
+footer{margin-top:40px;color:var(--muted);font-size:.8rem}
+
+@media (max-width:720px){
+  .tt{display:none}
+  .tt-mobile{display:block}
+  .brand h1{font-size:1.3rem}
+  .quick .btn span{display:none}
+  .quick .btn{padding:8px 11px}
+}
+@media (prefers-reduced-motion:no-preference){.tab{transition:background .15s,color .15s}}
+</style>
+
+<header class="top">
+  <div class="in">
+    <div class="brand">
+      <div class="avatar">L</div>
+      <div>
+        <h1>Luna · CE2</h1>
+        <small>École Pablo Neruda · Éragny-sur-Oise · 2026/2027</small>
+      </div>
+    </div>
+    <nav class="quick" aria-label="Actions rapides">
+      <a class="btn primary" href="tel:+33621184250">📞 <span>Périscolaire</span></a>
+      <a class="btn" href="mailto:fatima.kebir@ac-versailles.fr,gaela.guezello1@ac-versailles.fr">✉️ <span>Maîtresses</span></a>
+      <a class="btn" href="#edt">🗓️ <span>Emploi du temps</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="today" id="today">
+    <div class="row">
+      <span class="eyebrow" id="today-eyebrow">Aujourd'hui</span>
+      <h2 id="today-title">—</h2>
+    </div>
+    <div class="items" id="today-items"></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>La classe</h2><span class="hint">Infos de la réunion de rentrée</span></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Enseignantes</h3>
+        <dl class="kv">
+          <dt>Mme GUEZELLO</dt><dd>2 semaines</dd>
+          <dt>Mme KEBIR</dt><dd>2 semaines</dd>
+          <dt>AESH</dt><dd>une AESH dans la classe</dd>
+        </dl>
+        <p style="margin:10px 0 0;font-size:.88rem;color:var(--muted)">Les deux maîtresses alternent par périodes de deux semaines.</p>
+      </div>
+      <div class="card">
+        <h3>Effectif</h3>
+        <dl class="kv">
+          <dt>Élèves</dt><dd><b>27</b></dd>
+          <dt>Filles</dt><dd>14</dd>
+          <dt>Garçons</dt><dd>13</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h3>Horaires</h3>
+        <dl class="kv">
+          <dt>Matin</dt><dd>08h20 – 11h30</dd>
+          <dt>Pause méridienne</dt><dd>11h30 – 13h20</dd>
+          <dt>Après-midi</dt><dd>13h20 – 16h30</dd>
+          <dt>Jours</dt><dd>lundi, mardi, jeudi, vendredi</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Contacts</h2></div>
+    <div class="card contact">
+      <div class="p">
+        <div><span class="who">Mme Fatima KEBIR</span><span class="role">Enseignante</span></div>
+        <div class="links"><a href="mailto:fatima.kebir@ac-versailles.fr">fatima.kebir@ac-versailles.fr</a></div>
+      </div>
+      <div class="p">
+        <div><span class="who">Mme Gaëla GUEZELLO</span><span class="role">Enseignante</span></div>
+        <div class="links"><a href="mailto:gaela.guezello1@ac-versailles.fr">gaela.guezello1@ac-versailles.fr</a></div>
+      </div>
+      <div class="p">
+        <div><span class="who">Christelle</span><span class="role">Responsable périscolaire</span></div>
+        <div class="links"><a href="tel:+33621184250">06 21 18 42 50</a> · <a href="mailto:revpabloneruda@eragny.fr">revpabloneruda@eragny.fr</a></div>
+      </div>
+      <p style="margin:4px 0 0;font-size:.88rem;color:var(--muted)">Avec les maîtresses : privilégier le cahier de liaison, sinon le mail.</p>
+    </div>
+  </section>
+
+  <section id="edt">
+    <div class="sec-head"><h2>Emploi du temps CE2</h2><span class="hint">Semaine de 4 jours · pas d'école le mercredi</span></div>
+    <div class="tt"><div class="tt-grid" id="tt-grid"></div></div>
+    <div class="tt-mobile">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="list" id="list" role="tabpanel"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Bon à savoir</h2></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Tenue de sport</h3>
+        <ul class="plain">
+          <li><b>Mardi</b> : EPS transversale (30 min, 14h30)</li>
+          <li><b>Jeudi</b> : EPS 15h15 – 16h20</li>
+          <li><b>Vendredi</b> : EPS 15h15 – 16h20</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Rythme de la semaine</h3>
+        <ul class="plain">
+          <li>Anglais : lundi et jeudi (11h00)</li>
+          <li>Musique : mardi et vendredi (11h00)</li>
+          <li>Dictée bilan hebdomadaire : vendredi 10h30</li>
+          <li>Devoirs + lecture chaque jour 13h20 – 13h45</li>
+          <li>Bilan de la semaine : vendredi 16h20</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Rituels du matin</h3>
+        <ul class="plain">
+          <li>08h20 : rituel maths (lun, jeu) ou français (mar, ven)</li>
+          <li>09h20 : APQ méditation (10 min)</li>
+          <li>10h15 : calcul mental</li>
+          <li>10h30 : dictée / rallye écriture</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Mes notes</h2><span class="hint">Enregistrées sur cet appareil uniquement</span></div>
+    <textarea id="notes" placeholder="Semaine avec Mme Kebir ou Mme Guezello, sorties, matériel à apporter, mots dans le cahier de liaison…"></textarea>
+    <div class="saved" id="saved"></div>
+  </section>
+
+  <footer>Sources : affiche périscolaire, diaporama de rentrée et emploi du temps Teetsh (CE2 2026/2027), photographiés le 17 septembre 2026.</footer>
+</main>
+
+<script>
+const DAYS=["Lundi","Mardi","Jeudi","Vendredi"];
+const T=["08h20","08h40","09h20","09h30","10h00","10h15","10h30","11h00","11h30","13h20","13h35","13h45","14h15","14h30","15h00","15h15","16h20","16h30"];
+const CAT={rituel:"Rituels",fr:"Français",maths:"Mathématiques",apq:"APQ méditation",anglais:"Anglais",arts:"Enseignements artistiques",eps:"EPS",monde:"Questionner le monde",devoirs:"Devoirs / lecture",recre:"Récréation",pause:"Pause méridienne",bilan:"Bilan"};
+const common=[["10h00","10h15","Récréation","recre"],["10h15","10h30","Rituel calcul mental","rituel"],["11h30","13h20","Pause méridienne","pause"],["13h20","13h35","Devoirs","devoirs"],["13h35","13h45","Lecture","devoirs"],["15h00","15h15","Récréation","recre"]];
+const EDT={
+ Lundi:[["08h20","08h40","Rituels maths – résolution de problèmes","rituel"],["08h40","09h20","Français – conjugaison / grammaire","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – calcul et numération","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Anglais","anglais"],["13h45","14h15","Mathématiques","maths"],["14h15","15h00","Français – remédiation / ateliers autonomes","fr"],["15h15","16h20","Enseignements artistiques","arts"],["16h20","16h30","Bilan du jour","bilan"]],
+ Mardi:[["08h20","08h40","Rituels français","rituel"],["08h40","09h20","Français – conjugaison / grammaire","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – calcul et numération","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Musique","arts"],["13h45","14h30","Français – compréhension / littérature (inférences)","fr"],["14h30","15h00","EPS transversale","eps"],["15h15","16h20","Questionner le monde","monde"],["16h20","16h30","Bilan du jour","bilan"]],
+ Jeudi:[["08h20","08h40","Rituels maths – problèmes","rituel"],["08h40","09h20","Français – vocabulaire / orthographe","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – grandeurs et mesures","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Anglais","anglais"],["13h45","14h15","Mathématiques","maths"],["14h15","15h00","Français – vocabulaire / conjugaison ou orthographe","fr"],["15h15","16h20","EPS","eps"],["16h20","16h30","Bilan du jour","bilan"]],
+ Vendredi:[["08h20","08h40","Rituels français","rituel"],["08h40","09h20","Français – vocabulaire / orthographe","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – grandeurs et mesures","maths"],["10h30","11h00","Rituel dictée – bilan hebdomadaire","rituel"],["11h00","11h30","Musique","arts"],["13h45","15h00","Questionner le monde","monde"],["15h15","16h20","EPS","eps"],["16h20","16h30","Bilan de la semaine","bilan"]]
+};
+const byStart=d=>[...EDT[d],...common].sort((a,b)=>T.indexOf(a[0])-T.indexOf(b[0]));
+const mins=(a,b)=>{const m=s=>+s.slice(0,2)*60+ +s.slice(3);const v=m(b)-m(a);return v>=60?`${Math.floor(v/60)}h${String(v%60).padStart(2,"0")}`:`${v} min`};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+// today
+const now=new Date();const jsDay=now.getDay();
+const map={1:"Lundi",2:"Mardi",4:"Jeudi",5:"Vendredi"};
+const todayName=map[jsDay];
+const el=id=>document.getElementById(id);
+if(todayName){
+  el("today-title").textContent=todayName+" — "+now.toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
+  const key=["arts","eps","anglais","monde","maths","fr"];
+  const focus=byStart(todayName).filter(x=>["eps","anglais","arts","monde"].includes(x[3]));
+  el("today-items").innerHTML=focus.map(x=>`<span class="chip"><b>${esc(x[2])}</b> ${x[0]}</span>`).join("")+(focus.some(x=>x[3]==="eps")?`<span class="chip">👟 tenue de sport</span>`:"");
+}else{
+  el("today-eyebrow").textContent="Pas d'école aujourd'hui";
+  const next=jsDay===3?"Jeudi":"Lundi";
+  el("today-title").textContent="Prochaine journée : "+next;
+  const focus=byStart(next).filter(x=>["eps","anglais","arts","monde"].includes(x[3]));
+  el("today-items").innerHTML=focus.map(x=>`<span class="chip"><b>${esc(x[2])}</b> ${x[0]}</span>`).join("")+(focus.some(x=>x[3]==="eps")?`<span class="chip">👟 tenue de sport</span>`:"");
+}
+
+// desktop grid
+let g=`<div style="grid-row:1;grid-column:1"></div>`;
+DAYS.forEach((d,i)=>g+=`<div class="dh${d===todayName?" is-today":""}" style="grid-column:${i+2}">${d}</div>`);
+T.slice(0,-1).forEach((t,i)=>g+=`<div class="time" style="grid-row:${i+2}">${t}</div>`);
+DAYS.forEach((d,i)=>byStart(d).forEach(([s,e,l,c])=>{
+  g+=`<div class="cell cat-${c}" style="grid-column:${i+2};grid-row:${T.indexOf(s)+2}/${T.indexOf(e)+2}" title="${esc(l)} (${mins(s,e)})"><span>${esc(l)}</span><span class="d">${mins(s,e)}</span></div>`;
+}));
+el("tt-grid").innerHTML=g;
+
+// mobile tabs
+let sel=todayName||(jsDay===3?"Jeudi":"Lundi");
+try{const s=localStorage.getItem("luna-day");if(s&&DAYS.includes(s)&&!todayName)sel=s}catch(e){}
+function renderTabs(){
+  el("tabs").innerHTML=DAYS.map(d=>`<button class="tab" role="tab" id="tab-${d}" aria-selected="${d===sel}" data-d="${d}">${d.slice(0,3)}${d===todayName?'<span class="dot">AUJ.</span>':""}</button>`).join("");
+  el("list").innerHTML=byStart(sel).map(([s,e,l,c])=>`<div class="it cat-${c}"><span class="t">${s}<br>${e}</span><span>${esc(l)}<span class="d"> · ${mins(s,e)}</span></span></div>`).join("");
+}
+el("tabs").addEventListener("click",ev=>{const b=ev.target.closest(".tab");if(!b)return;sel=b.dataset.d;try{localStorage.setItem("luna-day",sel)}catch(e){}renderTabs()});
+renderTabs();
+
+// legend
+el("legend").innerHTML=Object.entries(CAT).filter(([k])=>!["recre","pause","bilan"].includes(k)).map(([k,v])=>`<span><i class="cat-${k}"></i>${v}</span>`).join("");
+
+// notes
+const ta=el("notes");
+try{ta.value=localStorage.getItem("luna-notes")||""}catch(e){}
+let tm;ta.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem("luna-notes",ta.value);el("saved").textContent="Enregistré "+new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}catch(e){el("saved").textContent="Impossible d'enregistrer sur cet appareil"}},400)});
+</script>

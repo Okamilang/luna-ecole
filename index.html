@@ -1,4 +1,12 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#7b3fa0">
 <title>Luna École</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%92%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap">
 <style>
 :root{
@@ -123,7 +131,8 @@ footer{margin-top:40px;color:var(--muted);font-size:.8rem}
 }
 @media (prefers-reduced-motion:no-preference){.tab{transition:background .15s,color .15s}}
 </style>
-
+</head>
+<body>
 <header class="top">
   <div class="in">
     <div class="brand">
@@ -255,62 +264,59 @@ footer{margin-top:40px;color:var(--muted);font-size:.8rem}
 </main>
 
 <script>
-const DAYS=["Lundi","Mardi","Jeudi","Vendredi"];
-const T=["08h20","08h40","09h20","09h30","10h00","10h15","10h30","11h00","11h30","13h20","13h35","13h45","14h15","14h30","15h00","15h15","16h20","16h30"];
-const CAT={rituel:"Rituels",fr:"Français",maths:"Mathématiques",apq:"APQ méditation",anglais:"Anglais",arts:"Enseignements artistiques",eps:"EPS",monde:"Questionner le monde",devoirs:"Devoirs / lecture",recre:"Récréation",pause:"Pause méridienne",bilan:"Bilan"};
-const common=[["10h00","10h15","Récréation","recre"],["10h15","10h30","Rituel calcul mental","rituel"],["11h30","13h20","Pause méridienne","pause"],["13h20","13h35","Devoirs","devoirs"],["13h35","13h45","Lecture","devoirs"],["15h00","15h15","Récréation","recre"]];
-const EDT={
+var DAYS=["Lundi","Mardi","Jeudi","Vendredi"];
+var T=["08h20","08h40","09h20","09h30","10h00","10h15","10h30","11h00","11h30","13h20","13h35","13h45","14h15","14h30","15h00","15h15","16h20","16h30"];
+var CAT={rituel:"Rituels",fr:"Français",maths:"Mathématiques",apq:"APQ méditation",anglais:"Anglais",arts:"Enseignements artistiques",eps:"EPS",monde:"Questionner le monde",devoirs:"Devoirs / lecture",recre:"Récréation",pause:"Pause méridienne",bilan:"Bilan"};
+var common=[["10h00","10h15","Récréation","recre"],["10h15","10h30","Rituel calcul mental","rituel"],["11h30","13h20","Pause méridienne","pause"],["13h20","13h35","Devoirs","devoirs"],["13h35","13h45","Lecture","devoirs"],["15h00","15h15","Récréation","recre"]];
+var EDT={
  Lundi:[["08h20","08h40","Rituels maths – résolution de problèmes","rituel"],["08h40","09h20","Français – conjugaison / grammaire","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – calcul et numération","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Anglais","anglais"],["13h45","14h15","Mathématiques","maths"],["14h15","15h00","Français – remédiation / ateliers autonomes","fr"],["15h15","16h20","Enseignements artistiques","arts"],["16h20","16h30","Bilan du jour","bilan"]],
  Mardi:[["08h20","08h40","Rituels français","rituel"],["08h40","09h20","Français – conjugaison / grammaire","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – calcul et numération","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Musique","arts"],["13h45","14h30","Français – compréhension / littérature (inférences)","fr"],["14h30","15h00","EPS transversale","eps"],["15h15","16h20","Questionner le monde","monde"],["16h20","16h30","Bilan du jour","bilan"]],
  Jeudi:[["08h20","08h40","Rituels maths – problèmes","rituel"],["08h40","09h20","Français – vocabulaire / orthographe","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – grandeurs et mesures","maths"],["10h30","11h00","Rituel français – dictée / rallye écriture","rituel"],["11h00","11h30","Anglais","anglais"],["13h45","14h15","Mathématiques","maths"],["14h15","15h00","Français – vocabulaire / conjugaison ou orthographe","fr"],["15h15","16h20","EPS","eps"],["16h20","16h30","Bilan du jour","bilan"]],
  Vendredi:[["08h20","08h40","Rituels français","rituel"],["08h40","09h20","Français – vocabulaire / orthographe","fr"],["09h20","09h30","APQ méditation","apq"],["09h30","10h00","Maths – grandeurs et mesures","maths"],["10h30","11h00","Rituel dictée – bilan hebdomadaire","rituel"],["11h00","11h30","Musique","arts"],["13h45","15h00","Questionner le monde","monde"],["15h15","16h20","EPS","eps"],["16h20","16h30","Bilan de la semaine","bilan"]]
 };
-const byStart=d=>[...EDT[d],...common].sort((a,b)=>T.indexOf(a[0])-T.indexOf(b[0]));
-const mins=(a,b)=>{const m=s=>+s.slice(0,2)*60+ +s.slice(3);const v=m(b)-m(a);return v>=60?`${Math.floor(v/60)}h${String(v%60).padStart(2,"0")}`:`${v} min`};
-const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function byStart(d){return EDT[d].concat(common).sort(function(a,b){return T.indexOf(a[0])-T.indexOf(b[0]);});}
+function m(s){return +s.slice(0,2)*60+ +s.slice(3);}
+function mins(a,b){var v=m(b)-m(a);if(v>=60){var r=v%60;return Math.floor(v/60)+"h"+(r<10?"0":"")+r;}return v+" min";}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function el(id){return document.getElementById(id);}
+var FOCUS=["eps","anglais","arts","monde"];
+function chips(d){var f=byStart(d).filter(function(x){return FOCUS.indexOf(x[3])>=0;});var h=f.map(function(x){return '<span class="chip"><b>'+esc(x[2])+'</b> '+x[0]+'</span>';}).join("");if(f.some(function(x){return x[3]==="eps";}))h+='<span class="chip">👟 tenue de sport</span>';return h;}
 
-// today
-const now=new Date();const jsDay=now.getDay();
-const map={1:"Lundi",2:"Mardi",4:"Jeudi",5:"Vendredi"};
-const todayName=map[jsDay];
-const el=id=>document.getElementById(id);
+var now=new Date(),jsDay=now.getDay();
+var map={1:"Lundi",2:"Mardi",4:"Jeudi",5:"Vendredi"};
+var todayName=map[jsDay];
 if(todayName){
   el("today-title").textContent=todayName+" — "+now.toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
-  const key=["arts","eps","anglais","monde","maths","fr"];
-  const focus=byStart(todayName).filter(x=>["eps","anglais","arts","monde"].includes(x[3]));
-  el("today-items").innerHTML=focus.map(x=>`<span class="chip"><b>${esc(x[2])}</b> ${x[0]}</span>`).join("")+(focus.some(x=>x[3]==="eps")?`<span class="chip">👟 tenue de sport</span>`:"");
+  el("today-items").innerHTML=chips(todayName);
 }else{
+  var next=jsDay===3?"Jeudi":"Lundi";
   el("today-eyebrow").textContent="Pas d'école aujourd'hui";
-  const next=jsDay===3?"Jeudi":"Lundi";
   el("today-title").textContent="Prochaine journée : "+next;
-  const focus=byStart(next).filter(x=>["eps","anglais","arts","monde"].includes(x[3]));
-  el("today-items").innerHTML=focus.map(x=>`<span class="chip"><b>${esc(x[2])}</b> ${x[0]}</span>`).join("")+(focus.some(x=>x[3]==="eps")?`<span class="chip">👟 tenue de sport</span>`:"");
+  el("today-items").innerHTML=chips(next);
 }
 
-// desktop grid
-let g=`<div style="grid-row:1;grid-column:1"></div>`;
-DAYS.forEach((d,i)=>g+=`<div class="dh${d===todayName?" is-today":""}" style="grid-column:${i+2}">${d}</div>`);
-T.slice(0,-1).forEach((t,i)=>g+=`<div class="time" style="grid-row:${i+2}">${t}</div>`);
-DAYS.forEach((d,i)=>byStart(d).forEach(([s,e,l,c])=>{
-  g+=`<div class="cell cat-${c}" style="grid-column:${i+2};grid-row:${T.indexOf(s)+2}/${T.indexOf(e)+2}" title="${esc(l)} (${mins(s,e)})"><span>${esc(l)}</span><span class="d">${mins(s,e)}</span></div>`;
-}));
+var g='<div style="grid-row:1;grid-column:1"></div>';
+DAYS.forEach(function(d,i){g+='<div class="dh'+(d===todayName?" is-today":"")+'" style="grid-column:'+(i+2)+'">'+d+'</div>';});
+T.slice(0,-1).forEach(function(t,i){g+='<div class="time" style="grid-row:'+(i+2)+'">'+t+'</div>';});
+DAYS.forEach(function(d,i){byStart(d).forEach(function(x){
+  g+='<div class="cell cat-'+x[3]+'" style="grid-column:'+(i+2)+';grid-row:'+(T.indexOf(x[0])+2)+'/'+(T.indexOf(x[1])+2)+'" title="'+esc(x[2])+' ('+mins(x[0],x[1])+')"><span>'+esc(x[2])+'</span><span class="d">'+mins(x[0],x[1])+'</span></div>';
+});});
 el("tt-grid").innerHTML=g;
 
-// mobile tabs
-let sel=todayName||(jsDay===3?"Jeudi":"Lundi");
-try{const s=localStorage.getItem("luna-day");if(s&&DAYS.includes(s)&&!todayName)sel=s}catch(e){}
+var sel=todayName||(jsDay===3?"Jeudi":"Lundi");
+try{var s=localStorage.getItem("luna-day");if(s&&DAYS.indexOf(s)>=0&&!todayName)sel=s;}catch(e){}
 function renderTabs(){
-  el("tabs").innerHTML=DAYS.map(d=>`<button class="tab" role="tab" id="tab-${d}" aria-selected="${d===sel}" data-d="${d}">${d.slice(0,3)}${d===todayName?'<span class="dot">AUJ.</span>':""}</button>`).join("");
-  el("list").innerHTML=byStart(sel).map(([s,e,l,c])=>`<div class="it cat-${c}"><span class="t">${s}<br>${e}</span><span>${esc(l)}<span class="d"> · ${mins(s,e)}</span></span></div>`).join("");
+  el("tabs").innerHTML=DAYS.map(function(d){return '<button class="tab" role="tab" id="tab-'+d+'" aria-selected="'+(d===sel)+'" data-d="'+d+'">'+d.slice(0,3)+(d===todayName?'<span class="dot">AUJ.</span>':"")+'</button>';}).join("");
+  el("list").innerHTML=byStart(sel).map(function(x){return '<div class="it cat-'+x[3]+'"><span class="t">'+x[0]+'<br>'+x[1]+'</span><span>'+esc(x[2])+'<span class="d"> · '+mins(x[0],x[1])+'</span></span></div>';}).join("");
 }
-el("tabs").addEventListener("click",ev=>{const b=ev.target.closest(".tab");if(!b)return;sel=b.dataset.d;try{localStorage.setItem("luna-day",sel)}catch(e){}renderTabs()});
+el("tabs").addEventListener("click",function(ev){var b=ev.target.closest(".tab");if(!b)return;sel=b.getAttribute("data-d");try{localStorage.setItem("luna-day",sel);}catch(e){}renderTabs();});
 renderTabs();
 
-// legend
-el("legend").innerHTML=Object.entries(CAT).filter(([k])=>!["recre","pause","bilan"].includes(k)).map(([k,v])=>`<span><i class="cat-${k}"></i>${v}</span>`).join("");
+el("legend").innerHTML=Object.keys(CAT).filter(function(k){return ["recre","pause","bilan"].indexOf(k)<0;}).map(function(k){return '<span><i class="cat-'+k+'"></i>'+CAT[k]+'</span>';}).join("");
 
-// notes
-const ta=el("notes");
-try{ta.value=localStorage.getItem("luna-notes")||""}catch(e){}
-let tm;ta.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{try{localStorage.setItem("luna-notes",ta.value);el("saved").textContent="Enregistré "+new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}catch(e){el("saved").textContent="Impossible d'enregistrer sur cet appareil"}},400)});
+var ta=el("notes"),tm;
+try{ta.value=localStorage.getItem("luna-notes")||"";}catch(e){}
+ta.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(function(){try{localStorage.setItem("luna-notes",ta.value);el("saved").textContent="Enregistré "+new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});}catch(e){el("saved").textContent="Impossible d'enregistrer sur cet appareil";}},400);});
 </script>
+</body>
+</html>
